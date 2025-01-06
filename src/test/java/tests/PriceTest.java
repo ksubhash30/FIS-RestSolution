@@ -16,7 +16,7 @@ public class PriceTest {
         Response response = PriceEndPoint.readPrice();
         response.then().log().all();
         String jsonResponse = response.asString();
-        JsonPath jsonPath = new JsonPath(response.toString());
+
         boolean isUSDpresent = jsonResponse.contains("\"USD\":");
         boolean isGBPpresent = jsonResponse.contains("\"GBP\":");
         boolean isEURpresent = jsonResponse.contains("\"EUR\":");
@@ -25,7 +25,7 @@ public class PriceTest {
         Assert.assertTrue(isGBPpresent,"GBP is not present in the response");
         Assert.assertTrue(isEURpresent,"EUR is not present in the response");
 
-        String desc = jsonPath.getString("x.bpi.GBP.description");
+        String desc = response.jsonPath().getString("bpi.GBP.description");
         Assert.assertEquals(desc,"British Pound Sterling" );
 
     }
